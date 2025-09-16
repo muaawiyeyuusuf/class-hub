@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>University Class Portal</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      /* Base Styles */
+      :root {
+        --primary: #3498db;
+        --secondary: #2c3e50;
+        --accent: #e74c3c;
+        --light: #ecf0f1;
+        --dark: #2c3e50;
+        --gradient-start: #3498db;
+        --gradient-end: #2c3e50;
+        --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --transition: all 0.3s ease;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f9f9f9;
+        overflow-x: hidden;
+      }
+
+      a {
+        text-decoration: none;
+        color: var(--primary);
+        transition: var(--transition);
+      }
+
+      button,
+      .btn {
+        cursor: pointer;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background: var(--primary);
+        color: white;
+        font-weight: 600;
+        transition: var(--transition);
+        display: inline-block;
+      }
+
+      button:hover,
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow);
+        background: var(--secondary);
+      }
+
+      .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+      }
+
+      section {
+        padding: 60px 0;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        margin-bottom: 15px;
+        color: var(--dark);
+      }
+
+      p {
+        margin-bottom: 15px;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      /* Header Styles */
+      header {
+        background-color: white;
+        box-shadow: var(--shadow);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        padding: 15px 0;
+      }
+
+      .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+      }
+
+      .logo i {
+        margin-right: 10px;
+      }
+
+      .nav-menu {
+        display: flex;
+        list-style: none;
+      }
+
+      .nav-menu li {
+        margin-left: 25px;
+      }
+
+      .nav-menu a {
+        color: var(--dark);
+        font-weight: 500;
+        position: relative;
+      }
+
+      .nav-menu a:after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--primary);
+        transition: var(--transition);
+      }
+
+      .nav-menu a:hover:after {
+        width: 100%;
+      }
+
+      .hamburger {
+        display: none;
+        cursor: pointer;
+        font-size: 1.5rem;
+      }
+
+      /* Hero Section */
+      .hero {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        background: linear-gradient(
+          135deg,
+          var(--gradient-start),
+          var(--gradient-end)
+        );
+        background-size: 200% 200%;
+        animation: gradientAnimation 10s ease infinite;
+        color: white;
+        position: relative;
+        overflow: hidden;
+      }
+
+      @keyframes gradientAnimation {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 1;
+        max-width: 600px;
+      }
+
+      .hero h1 {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        color: white;
+      }
+
+      .hero p {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+      }
+
+      .hero-buttons {
+        display: flex;
+        gap: 15px;
+      }
+
+      .hero-buttons .btn {
+        background: white;
+        color: var(--primary);
+      }
+
+      .hero-buttons .btn:hover {
+        background: var(--light);
+        color: var(--secondary);
+      }
+
+      /* Cards */
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 25px;
+        margin-top: 30px;
+      }
+
+      .card {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-img {
+        height: 200px;
+        overflow: hidden;
+      }
+
+      .card-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: var(--transition);
+      }
+
+      .card:hover .card-img img {
+        transform: scale(1.05);
+      }
+
+      .card-content {
+        padding: 20px;
+      }
+
+      .card-date {
+        color: #777;
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+      }
+
+      /* Footer */
+      footer {
+        background: var(--dark);
+        color: white;
+        padding: 50px 0 20px;
+      }
+
+      .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        margin-bottom: 30px;
+      }
+
+      .footer-section h3 {
+        color: white;
+        margin-bottom: 20px;
+        font-size: 1.2rem;
+      }
+
+      .footer-links {
+        list-style: none;
+      }
+
+      .footer-links li {
+        margin-bottom: 10px;
+      }
+
+      .footer-links a {
+        color: #ddd;
+      }
+
+      .footer-links a:hover {
+        color: white;
+      }
+
+      .social-icons {
+        display: flex;
+        gap: 15px;
+        margin-top: 15px;
+      }
+
+      .social-icons a {
+        color: white;
+        font-size: 1.2rem;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      /* Page Sections */
+      .page-section {
+        display: none;
+        padding: 40px 0;
+      }
+
+      .page-section.active {
+        display: block;
+      }
+
+      /* Filter and Search */
+      .filter-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+
+      .search-box {
+        display: flex;
+        align-items: center;
+        background: white;
+        border-radius: 5px;
+        padding: 5px 15px;
+        box-shadow: var(--shadow);
+      }
+
+      .search-box input {
+        border: none;
+        padding: 10px;
+        outline: none;
+        width: 250px;
+      }
+
+      .sort-options select {
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+      }
+
+      /* PDF Viewer */
+      .pdf-viewer {
+        width: 100%;
+        height: 500px;
+        border: none;
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+      }
+
+      .pdf-actions {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+      }
+
+      /* Modal */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 1001;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .modal.show {
+        display: flex;
+        opacity: 1;
+      }
+
+      .modal-content {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        max-width: 800px;
+        width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
+      }
+
+      .close-modal {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      /* Timeline */
+      .timeline {
+        position: relative;
+        max-width: 800px;
+        margin: 40px auto;
+      }
+
+      .timeline:before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        width: 2px;
+        height: 100%;
+        background: var(--primary);
+        transform: translateX(-50%);
+      }
+
+      .timeline-item {
+        margin-bottom: 40px;
+        position: relative;
+        width: 50%;
+        padding: 20px 40px;
+      }
+
+      .timeline-item:nth-child(odd) {
+        left: 0;
+      }
+
+      .timeline-item:nth-child(even) {
+        left: 50%;
+      }
+
+      .timeline-content {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+      }
+
+      .timeline-date {
+        font-weight: bold;
+        color: var(--primary);
+        margin-bottom: 10px;
+      }
+
+      /* Form Styles */
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-family: inherit;
+      }
+
+      .form-group textarea {
+        min-height: 150px;
+        resize: vertical;
+      }
+
+      .error-message {
+        color: var(--accent);
+        font-size: 0.9rem;
+        margin-top: 5px;
+        display: none;
+      }
+
+      /* Responsive Styles */
+      @media (max-width: 768px) {
+        .hamburger {
+          display: block;
+        }
+
+        .nav-menu {
+          position: fixed;
+          top: 70px;
+          right: -100%;
+          background: white;
+          width: 250px;
+          height: calc(100vh - 70px);
+          flex-direction: column;
+          padding: 40px 20px;
+          box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+          transition: var(--transition);
+        }
+
+        .nav-menu.active {
+          right: 0;
+        }
+
+        .nav-menu li {
+          margin: 15px 0;
+        }
+
+        .hero h1 {
+          font-size: 2.2rem;
+        }
+
+        .hero-buttons {
+          flex-direction: column;
+        }
+
+        .filter-bar {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .search-box {
+          width: 100%;
+        }
+
+        .search-box input {
+          width: 100%;
+        }
+
+        .timeline:before {
+          left: 20px;
+        }
+
+        .timeline-item {
+          width: 100%;
+          padding-left: 50px;
+          padding-right: 20px;
+          left: 0 !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="container header-container">
+        <a href="#" class="logo" data-page="home">
+          <i class="fas fa-graduation-cap"></i>
+          <span>Class-Hub</span>
+        </a>
+        <div class="hamburger" id="hamburger">
+          <i class="fas fa-bars"></i>
+        </div>
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="#" data-page="home">Home</a></li>
+          <li><a href="#" data-page="lessons">Lessons</a></li>
+          <li><a href="#" data-page="posts">Posts</a></li>
+          <li><a href="#" data-page="about">About</a></li>
+          <li><a href="#" data-page="contact">Contact</a></li>
+        </ul>
+      </div>
+    </header>
+
+    <!-- Home Page -->
+    <section id="home" class="page-section active">
+      <div class="hero">
+        <div class="container">
+          <div class="hero-content">
+            <h1>One Class, One Journey</h1>
+            <p>
+              WELCOME – CNS242 🎉 Halkan waxaad ka heli doontaa dhammaan
+              casharrada PDF ahaan, sidoo kale waxaad la socon kartaa news-ka,
+              waxqabadka class-ka, iyo waxyaabaha cusub ee coming soon-ka ah.
+              CNS242 mar walba waxay kuu diyaarisaa fursado waxbarasho iyo Xogo
+              cusub oo xiiso leh!
+            </p>
+            <div class="hero-buttons">
+              <a href="#" class="btn" data-page="lessons">View Lessons</a>
+              <a href="#" class="btn" data-page="posts">Latest Posts</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <h1>Latest News</h1>
+        <div class="card-grid" id="latest-news">
+          <!-- Latest news cards will be populated by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Lessons Page -->
+    <section id="lessons" class="page-section">
+      <div class="container">
+        <h2>Class Lessons</h2>
+        <div class="filter-bar">
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input
+              type="text"
+              id="lesson-search"
+              placeholder="Search lessons..."
+            />
+          </div>
+          <div class="sort-options">
+            <select id="lesson-sort">
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+            </select>
+          </div>
+        </div>
+        <div class="card-grid" id="lessons-container">
+          <!-- Lesson cards will be populated by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Posts Page -->
+    <section id="posts" class="page-section">
+      <div class="container">
+        <h2>Class Progress & Updates</h2>
+        <div class="card-grid" id="posts-container">
+          <!-- Post cards will be populated by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- About Page -->
+    <section id="about" class="page-section">
+      <div class="container">
+        <h2>About This Class</h2>
+        <p>
+          CNS242 is a unified, creative class that focuses on the all-round
+          development of its students. It encourages: Quality education 📚 Unity
+          and support 🤝 Sports and social culture ⚡ New opportunities and
+          creativity 🚀 This class provides students with a space to grow their
+          skills while fostering confidence, leadership, and friendship.
+        </p>
+
+        <h3>Our Mission</h3>
+        <p>
+          is to create a unified learning environment where every student can
+          develop their skills and abilities. We focus on: Supporting students
+          to achieve full progress 📚 Unity and close relationships between
+          students and teachers 🤝 Implementing creativity and new opportunities
+          ⚡ Sports and social activities that promote mental and physical
+          well-being 🏆 CNS242 is a place where students grow their abilities,
+          receive real support, and enjoy both learning and community
+          activities. 💙
+        </p>
+
+        <h3>Instructor</h3>
+        <div class="card" style="max-width: 600px">
+          <div class="card-content">
+            <h4>Muaawiya Yuusuf – Class Monitor 💼</h4>
+            <p>
+              Muaawiya Yuusuf is the Class Monitor of CNS242, known for his
+              leadership and high competence. During his tenure, he led the
+              timaday administration, promoting collaboration, order, and
+              overall class progress. 🌟 He is recognized for his flexibility,
+              unity, and genuine support for all students, making CNS242 a place
+              of togetherness and creativity. 🤝💙
+            </p>
+            <p><strong>Email:</strong> taajirkibirsan87@gmail.com</p>
+          </div>
+        </div>
+
+        <h3>Class Schedule – Semester 3</h3>
+        <div style="overflow-x: auto">
+          <table
+            style="
+              width: 100%;
+              border-collapse: collapse;
+              margin-top: 15px;
+              box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+              border-radius: 10px;
+              overflow: hidden;
+            "
+          >
+            <thead
+              style="
+                background: linear-gradient(90deg, #3498db, #2c3e50);
+                color: white;
+              "
+            >
+              <tr>
+                <th style="padding: 12px; text-align: left">Day</th>
+                <th style="padding: 12px; text-align: left">Subject</th>
+                <th style="padding: 12px; text-align: left">Time</th>
+                <th style="padding: 12px; text-align: left">Lecturer</th>
+                <th style="padding: 12px; text-align: left">Type</th>
+              </tr>
+            </thead>
+            <tbody style="background: #f9f9f9; color: #333">
+              <tr>
+                <td>Saturday</td>
+                <td>Introduction to Computer Networks</td>
+                <td>07:45 - 08:45 AM</td>
+                <td>Liban Ahmed Abdullahi</td>
+                <td>Theory</td>
+              </tr>
+              <tr>
+                <td>Saturday</td>
+                <td>Introduction to Computer Networks</td>
+                <td>08:45 - 09:45 AM</td>
+                <td>Liban Ahmed Abdullahi</td>
+                <td>Theory</td>
+              </tr>
+              <tr>
+                <td>Saturday</td>
+                <td>Multimedia Applications</td>
+                <td>10:15 - 11:15 AM</td>
+                <td>Ayub Mohamud Abdikarim</td>
+                <td>Theory</td>
+              </tr>
+              <tr>
+                <td>Saturday</td>
+                <td>Multimedia Applications</td>
+                <td>11:15 - 12:15 PM</td>
+                <td>Ayub Mohamud Abdikarim</td>
+                <td>Theory</td>
+              </tr>
+
+              <tr>
+                <td>Sunday</td>
+                <td>Java Script</td>
+                <td>07:45 - 08:45 AM</td>
+                <td>Jamila Hassan Mohamed</td>
+                <td>Theory</td>
+              </tr>
+              <tr>
+                <td>Sunday</td>
+                <td>Java Script</td>
+                <td>08:45 - 09:45 AM</td>
+                <td>Jamila Hassan Mohamed</td>
+                <td>Theory</td>
+              </tr>
+              <tr>
+                <td>Sunday</td>
+                <td>English III</td>
+                <td>10:15 - 11:15 AM</td>
+                <td>Ajobe Jamal</td>
+                <td>Theory</td>
+              </tr>
+              <tr>
+                <td>Sunday</td>
+                <td>English III</td>
+                <td>11:15 - 12:15 PM</td>
+                <td>Ajobe Jamal</td>
+                <td>Theory</td>
+              </tr>
+
+              <tr>
+                <td>Monday</td>
+                <td>English Level III</td>
+                <td>07:00 - 07:45 AM</td>
+                <td>Dotrus Wistic Ethallus</td>
+                <td>Theory</td>
+              </tr>
+              <tr>
+                <td>Monday</td>
+                <td>English Level III</td>
+                <td>07:45 - 08:45 AM</td>
+                <td>Dotrus Wistic Ethallus</td>
+                <td>Theory</td>
+              </tr>
+              <tr>
+                <td>Monday</td>
+                <td>Multimedia Applications</td>
+                <td>08:45 - 09:45 AM</td>
+                <td>Ayub Mohamud Abdikarim</td>
+                <td>Theory</td>
+              </tr>
+              <tr>
+                <td>Monday</td>
+                <td>Introduction to Computer Networks</td>
+                <td>10:15 - 11:15 AM</td>
+                <td>Abdullahi Ahmed Aden</td>
+                <td>Theory</td>
+              </tr>
+              <tr>
+                <td>Monday</td>
+                <td>Introduction to Computer Networks</td>
+                <td>11:15 - 12:15 PM</td>
+                <td>Abdullahi Ahmed Aden</td>
+                <td>Theory</td>
+              </tr>
+
+              <tr>
+                <td>Tuesday</td>
+                <td>Calculus</td>
+                <td>07:45 - 08:45 AM</td>
+                <td>Ahmed Mohamed Farah</td>
+                <td>Theory</td>
+              </tr>
+              <tr>
+                <td>Tuesday</td>
+                <td>Calculus</td>
+                <td>08:45 - 09:45 AM</td>
+                <td>Ahmed Mohamed Farah</td>
+                <td>Theory</td>
+              </tr>
+              <tr>
+                <td>Tuesday</td>
+                <td>English Level III</td>
+                <td>10:15 - 11:15 AM</td>
+                <td>Dotrus Wistic Ethallus</td>
+                <td>Theory</td>
+              </tr>
+              <tr>
+                <td>Tuesday</td>
+                <td>English Level III</td>
+                <td>11:15 - 12:15 PM</td>
+                <td>Dotrus Wistic Ethallus</td>
+                <td>Theory</td>
+              </tr>
+
+              <tr>
+                <td>Wednesday</td>
+                <td>Multimedia Applications</td>
+                <td>07:00 - 07:45 AM</td>
+                <td>Liban Ahmed Abdullahi</td>
+                <td>Theory</td>
+              </tr>
+              <tr>
+                <td>Wednesday</td>
+                <td>Introduction to Computer Networks</td>
+                <td>07:45 - 08:45 AM</td>
+                <td>Abdullahi Ahmed Aden</td>
+                <td>Theory</td>
+              </tr>
+              <tr>
+                <td>Wednesday</td>
+                <td>Introduction to Computer Networks</td>
+                <td>08:45 - 09:45 AM</td>
+                <td>Abdullahi Ahmed Aden</td>
+                <td>Theory</td>
+              </tr>
+              <tr>
+                <td>Wednesday</td>
+                <td>Java Script</td>
+                <td>10:15 - 11:15 AM</td>
+                <td>Jamila Hassan Mohamed</td>
+                <td>Theory</td>
+              </tr>
+              <tr>
+                <td>Wednesday</td>
+                <td>Java Script</td>
+                <td>11:15 - 12:15 PM</td>
+                <td>Jamila Hassan Mohamed</td>
+                <td>Theory</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <br /><br />
+
+        <h3>Class Progress Timeline</h3>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-content">
+              <div class="timeline-date">23 February 2024</div>
+              <p>
+                CNS242 has shown remarkable growth this past year, achieving
+                milestones in education, sports, and student collaboration. 📚⚡
+              </p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-content">
+              <div class="timeline-date">12 March 2024</div>
+              <p>
+                Class-ku wuxuu si guul leh u hirgeliyey team-kii ugu horeeyey
+                iyo uniform-kii gaarka ahaa, taasoo kordhisay sharaf iyo
+                midnimo. 👕💙
+              </p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-content">
+              <div class="timeline-date">10 April 2024</div>
+              <p>
+                Hawlgallada taageerada ayaa ka caawiyey arday badan inay ka
+                gudbaan caqabadaha tacliimeed — cidna lama dayacin. 🤝
+              </p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-content">
+              <div class="timeline-date">24 May 2024</div>
+              <p>
+                Iyada oo loo marayo mashruucyo hal-abuur leh, kooxo arday ah,
+                iyo koorsooyin bilaash ah, CNS242 waxay sii wadaysaa kor u
+                qaadista hogaaminta, wada-shaqeynta, iyo horumarka guud. 🚀
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Page -->
+    <section id="contact" class="page-section">
+      <div class="container">
+        <h2>Contact Us</h2>
+        <div class="card">
+          <div class="card-content">
+            <p>
+              Feel free to reach out to us with any questions about the class:
+            </p>
+            <p><strong>Email:</strong> cns242elearning@gmail.com</p>
+            <p><strong>WhatsApp:</strong> +252617392380</p>
+          </div>
+        </div>
+
+        <h3>Send a Message</h3>
+        <form id="contact-form">
+          <div class="form-group">
+            <label for="student-id">Student ID (8 digits)</label>
+            <input
+              type="text"
+              id="student-id"
+              placeholder="Enter your 8-digit ID"
+            />
+            <div class="error-message" id="id-error">
+              Please enter a valid ID. fadlan geli ID sax ah
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea
+              id="message"
+              placeholder="Type your message here..."
+            ></textarea>
+          </div>
+          <button type="submit">Send via WhatsApp</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- PDF Viewer Modal -->
+    <div class="modal" id="pdf-modal">
+      <div class="modal-content">
+        <span class="close-modal" id="close-pdf">&times;</span>
+        <iframe class="pdf-viewer" id="pdf-frame" src=""></iframe>
+        <div class="pdf-actions">
+          <a href="#" class="btn" id="download-pdf">Download PDF</a>
+          <button class="btn" id="close-pdf-btn">Close Viewer</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Image Modal -->
+    <div class="modal" id="image-modal">
+      <div class="modal-content">
+        <span class="close-modal" id="close-image">&times;</span>
+        <img id="modal-image" src="" alt="" />
+        <div id="modal-caption"></div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul class="footer-links">
+              <li><a href="#" data-page="home">Home</a></li>
+              <li><a href="#" data-page="lessons">Lessons</a></li>
+              <li><a href="#" data-page="posts">Posts</a></li>
+              <li><a href="#" data-page="about">About</a></li>
+              <li><a href="#" data-page="contact">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h3>About the Class</h3>
+            <p>
+              CNS242 waa class mideysan, hal-abuur leh, isla markaana ka
+              shaqeeya horumarinta ardayda dhinac walba. Waxay dhiirrigelisaa:
+              Waxbarasho tayo leh Isku duubni iyo taageero Ciyaaro iyo dhaqan
+              bulsho Fursado cusub iyo hal-abuurnimo. Class-kan wuxuu ardayda
+              siiya taloyin ay ku kobciyaan xirfadooda, isla markaana ku
+              barbaarinayaan kalsooni, hogaamin, iyo saaxiibtinimo.
+            </p>
+          </div>
+          <div class="footer-section">
+            <h3>Contact Information</h3>
+            <p>Email: cns242elearning@gmail.com</p>
+            <p>WhatsApp: +252617392380</p>
+            <div class="social-icons">
+              <a href="https://wa.me/252617392380" target="_blank">
+                <i class="fab fa-whatsapp"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>
+            &copy; 2025 Class-hub. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Sample data for lessons and posts
+      const lessons = [
+        {
+          id: "lesson-01",
+          title: "Networking Essentials 1: ",
+          description: "Networking Essentials by Abdulahi Ahmed Aden..",
+          pdf_url: "Chapter 1  Part 1.pdf",
+          date: "9/15/2025",
+        },
+        
+        {
+          id: "lesson-02",
+          title: "MULTIMEDIA AND ITS APPLICATION",
+          description: "MULTIMEDIA AND ITS APPLICATION by Ayub M. Abdikarim.",
+          pdf_url: "Module 1 -  Graphic Design (2).pdf",
+          date: "9/15/2025",
+        },
+        {
+          id: "lesson-02",
+          title: "Module_1_-__Graphic_Design_Bootcamp",
+          description:
+            "Module_1_-__Graphic_Design_Bootcamp by Ayub M. Abdikarim.",
+          pdf_url: "Module_1_-__Graphic_Design_Bootcamp[1].pdf",
+          date: "9/15/2025",
+        },
+        {
+          id: "lesson-02",
+          title: "Multimedia - Semester Assignment Notice",
+          description:
+            "Multimedia - Semester Assignment Notice by Ayub M. Abdikarim.",
+          pdf_url:
+            "Multimedia - Semester Assignment Notice.pdf",
+          date: "9/15/2025",
+        },
+        {
+          id: "lesson-02",
+          title: "Multimedia Course  Outline",
+          description: "Multimedia Course  Outline 2025 by Ayub M. Abdikarim.",
+          pdf_url: "Multimedia Course  Outline 2025.pdf",
+          date: "9/15/2025",
+        },
+      ];
+
+      const posts = [
+        {
+          id: "post-01",
+          image: "groub.png",
+          caption:
+            "🔒 Isku Xog iyo Isbarasho – CNS242 🔒 .Sanadkii lasoo dhaafay, waxaan hirgelinay shuruuc muhiim ah oo ah in aan abuurno group u gaar ah ardayda oo ka madax bannaan macallimiinta, si aan u ilaalino xogaha muhiimka ah ee ka dhexeya ardayda. 👥✨ Waxaa intaas dheer, waxaan ku guuleysanay shacinta courses free ah, taas oo fursad weyn siisay arday badan oo doonayay inay horumar dheeraad ah sameeyaan. 🚀📚 CNS242 waa class isku duuban, hal-abuur leh, kana shaqeeya horumarinta arday kasta. 💯💙",
+          host: "Muaawiya",
+          date: "2025-09-10",
+        },
+        {
+          id: "post-02",
+          image: "foot.jpg",
+          caption:
+            "🏆 Horumarka CNS242 🏆 .Mid kamid ah hormaradii aan sameynay sanadkii lasoo dhaafay, wuxuu ahaa in aan si weyn oo waafaqsan shuruucda ciyaaraha ku hirgelinay team-kii ugu horreeyay ee rasmi ah ee class-ka. 🎉 Intaas kaliya ma ahan, waxaan sidoo kale ku guuleysanay in aan sameyno uniform gaar ah oo u qaas ah CNS242 👕⚡️. Taasi waxay ahayd horumar weyn oo farxad iyo sharaf usoo hoyay dhammaan ardayda class-ka. 💙✨",
+          host: "Khaalid gudiga sportska",
+          date: "2025-09-15",
+        },
+        {
+          id: "post-03",
+          image: "mclinarday.jpeg",
+          caption:
+            "🤝 Isku Duubni iyo Taageero – CNS242 🤝Sanadkii lasoo dhaafay, waxaan caawimo u sameynay ku dhowaad 15 arday oo ka tirsan class-ka kuwaas oo ku dhibanaa xiriirka macallinka English-ka. 📚✨ Waxaan dhisnay isku duubni iyo xoojinta xiriirka ardayda iyo macallimiinta, taas oo noqotay talaabo weyn oo keentay horumar iyo kalsooni cusub. 🚀💯CNS242 mar walba waxay mudnaanta siisaa midnimada iyo garab istaaga arday walba. 🌟",
+          host: "Muaawiya",
+          date: "2025-09-15",
+        },
+        {
+          id: "post-04",
+          image:
+            "بوستر Poster ازرق إسلامي بسيط عن عيد الاضحى.png",
+          caption:
+            "✨ CNS242 – Isbeddel iyo Horumar ✨Sanadkii hore, class-ka CNS242 wuxuu ahaa mid adag in la xakameeyo. Laakiin markii ay dhalatay Xukuumaddii Labaad ee Class-ka, wax badan ayaa isbeddelay.⚡ Waxbarashada: Waxaa kor u kacay dedaalka iyo nidaamka ardayda.⚡ Sports: Guulo iyo dhiirigelin badan ayaa lagu daray ciyaaraha.Maanta, CNS242 wuxuu istaagaa sidii class mideysan oo leh hogaamin iyo hal-abuur cusub. 🚀💯",
+          host: "Muaawiya",
+          date: "2025-09-15",
+        },
+        {
+          id: "post-05",
+          image:
+            "Top Engineering Colleges in Mumbai 2025 – A Complete Guide for Students.jpeg",
+          caption:
+            "🎓 Iscaawin iyo Isku Duubni – CNS242 🎓Sanadkii lasoo dhaafay, waxaan ku guuleysanay caawinta arday ka tirsan class-ka si uu u sii wato waxbarashadiisa 📚✨. Ardaygan ayaa ku dhawaaday inuu ka haro jaamacadda ama class-ka sababtoo ah fees-ka.Guushan waxay si cad u muujinaysaa istagerida, midnimada, iyo xiriirka dhow ee ka dhexeya ardayda CNS242. 🤝💙CNS242 mar walba waxay taageertaa arday kasta oo doonaya inuu horumar sameeyo. 🚀",
+          host: "Muaawiya",
+          date: "2025-09-15",
+        },
+      ];
+
+      // DOM Elements
+      const hamburger = document.getElementById("hamburger");
+      const navMenu = document.getElementById("nav-menu");
+      const pageSections = document.querySelectorAll(".page-section");
+      const navLinks = document.querySelectorAll(
+        ".nav-menu a, .footer-links a, .hero-buttons a"
+      );
+      const lessonsContainer = document.getElementById("lessons-container");
+      const postsContainer = document.getElementById("posts-container");
+      const latestNewsContainer = document.getElementById("latest-news");
+      const lessonSearch = document.getElementById("lesson-search");
+      const lessonSort = document.getElementById("lesson-sort");
+      const pdfModal = document.getElementById("pdf-modal");
+      const pdfFrame = document.getElementById("pdf-frame");
+      const downloadPdf = document.getElementById("download-pdf");
+      const closePdfBtn = document.getElementById("close-pdf");
+      const closePdfBtn2 = document.getElementById("close-pdf-btn");
+      const imageModal = document.getElementById("image-modal");
+      const modalImage = document.getElementById("modal-image");
+      const modalCaption = document.getElementById("modal-caption");
+      const closeImageBtn = document.getElementById("close-image");
+      const contactForm = document.getElementById("contact-form");
+      const studentIdInput = document.getElementById("student-id");
+      const idError = document.getElementById("id-error");
+
+      // Format date to DD MMM YYYY
+      function formatDate(dateString) {
+        const date = new Date(dateString);
+        const options = { day: "2-digit", month: "short", year: "numeric" };
+        return date.toLocaleDateString("en-US", options);
+      }
+
+      // Render lessons
+      function renderLessons(lessonsArray) {
+        lessonsContainer.innerHTML = "";
+        lessonsArray.forEach((lesson) => {
+          const lessonCard = document.createElement("div");
+          lessonCard.className = "card";
+          lessonCard.innerHTML = `
+                    <div class="card-content">
+                        <h3>${lesson.title}</h3>
+                        <p class="card-date">${formatDate(lesson.date)}</p>
+                        <p>${lesson.description}</p>
+                        <div class="hero-buttons">
+                            <button class="btn view-pdf" data-url="${
+                              lesson.pdf_url
+                            }">View PDF</button>
+                            <a href="${
+                              lesson.pdf_url
+                            }" class="btn" download>Download</a>
+                        </div>
+                    </div>
+                `;
+          lessonsContainer.appendChild(lessonCard);
+        });
+
+        // Add event listeners to view buttons
+        document.querySelectorAll(".view-pdf").forEach((button) => {
+          button.addEventListener("click", () => {
+            const pdfUrl = button.getAttribute("data-url");
+            pdfFrame.src = pdfUrl;
+            downloadPdf.href = pdfUrl;
+            pdfModal.classList.add("show");
+          });
+        });
+      }
+
+      // Render posts
+      function renderPosts(postsArray) {
+        postsContainer.innerHTML = "";
+        postsArray.forEach((post) => {
+          const postCard = document.createElement("div");
+          postCard.className = "card";
+          postCard.innerHTML = `
+                    <div class="card-img">
+                        <img src="${post.image}" alt="${post.caption}">
+                    </div>
+                    <div class="card-content">
+                        <p class="card-date">${formatDate(
+                          post.date
+                        )} • Posted by ${post.host}</p>
+                        <p>${post.caption}</p>
+                        <button class="btn view-image" data-image="${
+                          post.image
+                        }" data-caption="${post.caption}">View Image</button>
+                    </div>
+                `;
+          postsContainer.appendChild(postCard);
+        });
+
+        // Add event listeners to view buttons
+        document.querySelectorAll(".view-image").forEach((button) => {
+          button.addEventListener("click", () => {
+            const imageUrl = button.getAttribute("data-image");
+            const caption = button.getAttribute("data-caption");
+            modalImage.src = imageUrl;
+            modalCaption.textContent = caption;
+            imageModal.classList.add("show");
+          });
+        });
+      }
+
+      // Render latest news (most recent posts)
+      function renderLatestNews() {
+        // Sort posts by date (newest first) and take the first 3
+        const sortedPosts = [...posts].sort(
+          (a, b) => new Date(b.date) - new Date(a.date)
+        );
+        const latestPosts = sortedPosts.slice(0, 3);
+
+        latestNewsContainer.innerHTML = "";
+        latestPosts.forEach((post) => {
+          const newsCard = document.createElement("div");
+          newsCard.className = "card";
+          newsCard.innerHTML = `
+                    <div class="card-img">
+                        <img src="${post.image}" alt="${post.caption}">
+                    </div>
+                    <div class="card-content">
+                        <p class="card-date">${formatDate(post.date)}</p>
+                        <p>${post.caption}</p>
+                        <button class="btn view-image" data-image="${
+                          post.image
+                        }" data-caption="${post.caption}">View Image</button>
+                    </div>
+                `;
+          latestNewsContainer.appendChild(newsCard);
+        });
+
+        // Add event listeners to view buttons
+        document.querySelectorAll(".view-image").forEach((button) => {
+          button.addEventListener("click", () => {
+            const imageUrl = button.getAttribute("data-image");
+            const caption = button.getAttribute("data-caption");
+            modalImage.src = imageUrl;
+            modalCaption.textContent = caption;
+            imageModal.classList.add("show");
+          });
+        });
+      }
+
+      // Filter and sort lessons
+      function filterAndSortLessons() {
+        const searchTerm = lessonSearch.value.toLowerCase();
+        const sortOption = lessonSort.value;
+
+        let filteredLessons = lessons.filter(
+          (lesson) =>
+            lesson.title.toLowerCase().includes(searchTerm) ||
+            lesson.description.toLowerCase().includes(searchTerm)
+        );
+
+        if (sortOption === "newest") {
+          filteredLessons.sort((a, b) => new Date(b.date) - new Date(a.date));
+        } else {
+          filteredLessons.sort((a, b) => new Date(a.date) - new Date(b.date));
+        }
+
+        renderLessons(filteredLessons);
+      }
+
+      // Switch page
+      function switchPage(pageId) {
+        pageSections.forEach((section) => {
+          section.classList.remove("active");
+        });
+        document.getElementById(pageId).classList.add("active");
+
+        // Scroll to top
+        window.scrollTo(0, 0);
+
+        // Close mobile menu if open
+        navMenu.classList.remove("active");
+      }
+
+      // Validate student ID
+      function validateStudentId(id) {
+        return /^(C6|c6)\d{6,7}$/.test(id);
+      }
+
+      // Send WhatsApp message
+      function sendWhatsAppMessage(id, message) {
+        const formattedDate = new Date().toLocaleString();
+        const text = `New Contact Form Submission%0AName (ID): ${id}%0AMessage: ${message}%0ADate: ${formattedDate}`;
+        window.open(`https://wa.me/252617392380?text=${text}`, "_blank");
+      }
+
+      // Event Listeners
+      hamburger.addEventListener("click", () => {
+        navMenu.classList.toggle("active");
+      });
+
+      navLinks.forEach((link) => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          const page = link.getAttribute("data-page");
+          switchPage(page);
+        });
+      });
+
+      lessonSearch.addEventListener("input", filterAndSortLessons);
+      lessonSort.addEventListener("change", filterAndSortLessons);
+
+      closePdfBtn.addEventListener("click", () => {
+        pdfModal.classList.remove("show");
+        pdfFrame.src = "";
+      });
+
+      closePdfBtn2.addEventListener("click", () => {
+        pdfModal.classList.remove("show");
+        pdfFrame.src = "";
+      });
+
+      closeImageBtn.addEventListener("click", () => {
+        imageModal.classList.remove("show");
+      });
+
+      contactForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const id = studentIdInput.value;
+        const message = document.getElementById("message").value;
+
+        if (!validateStudentId(id)) {
+          idError.style.display = "block";
+          return;
+        }
+
+        idError.style.display = "none";
+        sendWhatsAppMessage(id, message);
+      });
+
+      // Close modals when clicking outside
+      window.addEventListener("click", (e) => {
+        if (e.target === pdfModal) {
+          pdfModal.classList.remove("show");
+          pdfFrame.src = "";
+        }
+        if (e.target === imageModal) {
+          imageModal.classList.remove("show");
+        }
+      });
+
+      // Initialize the page
+      document.addEventListener("DOMContentLoaded", () => {
+        renderLessons(lessons);
+        renderPosts(posts);
+        renderLatestNews();
+
+        // Add scroll animation
+        const observerOptions = {
+          root: null,
+          rootMargin: "0px",
+          threshold: 0.1,
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.style.opacity = 1;
+              entry.target.style.transform = "translateY(0)";
+            }
+          });
+        }, observerOptions);
+
+        document.querySelectorAll(".card, h2, h3, p").forEach((el) => {
+          el.style.opacity = 0;
+          el.style.transform = "translateY(20px)";
+          el.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+          observer.observe(el);
+        });
+      });
+    </script>
+  </body>
+</html>
