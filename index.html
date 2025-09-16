@@ -100,18 +100,18 @@
     <!-- Header/Navigation -->
     <header class="bg-white shadow-md sticky top-0 z-50">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <a href="#" class="flex items-center text-blue-600 font-bold text-xl">
+            <a href="logr.html" class="flex items-center text-blue-600 font-bold text-xl">
                 <i class="fas fa-graduation-cap mr-2"></i>
                 <span>Class-Hub</span>
             </a>
             
             <!-- Desktop Navigation -->
             <nav class="hidden md:flex space-x-6 items-center">
-                <a href="#" class="text-gray-700 hover:text-blue-600 transition">Home</a>
-                <a href="#" class="text-gray-700 hover:text-blue-600 transition">Lessons</a>
-                <a href="#" class="text-gray-700 hover:text-blue-600 transition">Posts</a>
-                <a href="#" class="text-gray-700 hover:text-blue-600 transition">About</a>
-                <a href="#" class="text-gray-700 hover:text-blue-600 transition">Contact</a>
+                <a href="logr.html" class="text-gray-700 hover:text-blue-600 transition">Home</a>
+                <a href="logr.html" class="text-gray-700 hover:text-blue-600 transition">Lessons</a>
+                <a href="logr.html" class="text-gray-700 hover:text-blue-600 transition">Posts</a>
+                <a href="logr.html" class="text-gray-700 hover:text-blue-600 transition">About</a>
+                <a href="logr.html" class="text-gray-700 hover:text-blue-600 transition">Contact</a>
                 
                 <!-- User icon (hidden initially) -->
                 <div id="user-icon" class="hidden relative ml-4">
@@ -145,7 +145,7 @@
         <!-- Mobile menu (hidden by default) -->
         <div id="mobile-menu" class="hidden md:hidden bg-white border-t py-2">
             <div class="container mx-auto px-4 flex flex-col space-y-2">
-                <a href="#" class="py-2 text-gray-700 hover:text-blue-600 transition">Home</a>
+                <a href="logr.html" class="py-2 text-gray-700 hover:text-blue-600 transition">Home</a>
                
             </div>
         </div>
@@ -315,11 +315,11 @@
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-300 hover:text-white transition">Home</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white transition">Lessons</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white transition">Posts</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white transition">About</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white transition">Contact</a></li>
+                        <li><a href="logr.html" class="text-gray-300 hover:text-white transition">Home</a></li>
+                        <li><a href="logr.html" class="text-gray-300 hover:text-white transition">Lessons</a></li>
+                        <li><a href="logr.html" class="text-gray-300 hover:text-white transition">Posts</a></li>
+                        <li><a href="logr.html" class="text-gray-300 hover:text-white transition">About</a></li>
+                        <li><a href="logr.html" class="text-gray-300 hover:text-white transition">Contact</a></li>
                     </ul>
                 </div>
                 
@@ -349,328 +349,163 @@
     </footer>
 
     <script>
-        // Constants for localStorage keys
-        const USERS_KEY = 'cns242_users';
-        const CURRENT_USER_KEY = 'cns242_current';
+    // Constants for localStorage keys
+    const USERS_KEY = 'cns242_users';
+    const CURRENT_USER_KEY = 'cns242_current';
+    
+    // DOM Elements
+    const loginForm = document.getElementById('login-form');
+    const nameForm = document.getElementById('name-form');
+    const nameFormContainer = document.getElementById('name-form-container');
+    const loginContainer = document.getElementById('login-container');
+    const dashboardContainer = document.getElementById('dashboard-container');
+    const welcomeMessage = document.getElementById('welcome-message');
+    const userFullName = document.getElementById('user-full-name');
+    const userIdDisplay = document.getElementById('user-id-display');
+    const userIcon = document.getElementById('user-icon');
+    const mobileUserIcon = document.getElementById('mobile-user-icon');
+    const userMenuButton = document.getElementById('user-menu-button');
+    const userDropdown = document.getElementById('user-dropdown');
+    const mobileUserMenuButton = document.getElementById('mobile-user-menu-button');
+    const mobileUserDropdown = document.getElementById('mobile-user-dropdown');
+    const logoutBtn = document.getElementById('logout-btn');
+    const mobileLogoutBtn = document.getElementById('mobile-logout-btn');
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const toast = document.getElementById('toast');
+    const toastMessage = document.getElementById('toast-message');
+    
+    let pendingUser = null; // Temporary storage for registration
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        const currentUser = getCurrentUser();
+        if (currentUser) showDashboard(currentUser);
+        setupEventListeners();
+    });
+    
+    function setupEventListeners() {
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            handleLogin();
+        });
+        nameForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            handleNameSubmit();
+        });
+        document.getElementById('cancel-name-btn').addEventListener('click', hideNameForm);
         
-        // DOM Elements
-        const loginForm = document.getElementById('login-form');
-        const nameForm = document.getElementById('name-form');
-        const nameFormContainer = document.getElementById('name-form-container');
-        const loginContainer = document.getElementById('login-container');
-        const dashboardContainer = document.getElementById('dashboard-container');
-        const welcomeMessage = document.getElementById('welcome-message');
-        const userFullName = document.getElementById('user-full-name');
-        const userIdDisplay = document.getElementById('user-id-display');
-        const userIcon = document.getElementById('user-icon');
-        const mobileUserIcon = document.getElementById('mobile-user-icon');
-        const userMenuButton = document.getElementById('user-menu-button');
-        const userDropdown = document.getElementById('user-dropdown');
-        const mobileUserMenuButton = document.getElementById('mobile-user-menu-button');
-        const mobileUserDropdown = document.getElementById('mobile-user-dropdown');
-        const logoutBtn = document.getElementById('logout-btn');
-        const mobileLogoutBtn = document.getElementById('mobile-logout-btn');
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const toast = document.getElementById('toast');
-        const toastMessage = document.getElementById('toast-message');
+        if (userMenuButton) {
+            userMenuButton.addEventListener('click', e => {
+                e.stopPropagation();
+                userDropdown.classList.toggle('hidden');
+            });
+        }
+        if (mobileUserMenuButton) {
+            mobileUserMenuButton.addEventListener('click', e => {
+                e.stopPropagation();
+                mobileUserDropdown.classList.toggle('hidden');
+            });
+        }
+        if (logoutBtn) logoutBtn.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); handleLogout(); });
+        if (mobileLogoutBtn) mobileLogoutBtn.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); handleLogout(); });
         
-        // Temporary storage for user data during registration
-        let pendingUser = null;
+        if (mobileMenuButton) {
+            mobileMenuButton.addEventListener('click', e => {
+                e.stopPropagation();
+                mobileMenu.classList.toggle('hidden');
+                mobileMenu.classList.toggle('mobile-menu');
+            });
+        }
         
-        // Initialize the application
-        document.addEventListener('DOMContentLoaded', function() {
-            // Check if user is already logged in
-            const currentUser = getCurrentUser();
-            if (currentUser) {
-                showDashboard(currentUser);
-                return;
-            }
-            
-            // Set up event listeners
-            setupEventListeners();
+        document.addEventListener('click', function(e) {
+            if (userDropdown && !userIcon.contains(e.target)) userDropdown.classList.add('hidden');
+            if (mobileUserDropdown && !mobileUserIcon.contains(e.target)) mobileUserDropdown.classList.add('hidden');
+            if (mobileMenu && !mobileMenuButton.contains(e.target)) mobileMenu.classList.add('hidden');
         });
         
-        // Set up all event listeners
-        function setupEventListeners() {
-            // Login form submission
-            loginForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                handleLogin();
-            });
-            
-            // Name form submission
-            nameForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                handleNameSubmit();
-            });
-            
-            // Cancel name button
-            document.getElementById('cancel-name-btn').addEventListener('click', function() {
-                hideNameForm();
-            });
-            
-            // User menu toggle (desktop)
-            if (userMenuButton) {
-                userMenuButton.addEventListener('click', function() {
-                    userDropdown.classList.toggle('hidden');
-                });
-            }
-            
-            // User menu toggle (mobile)
-            if (mobileUserMenuButton) {
-                mobileUserMenuButton.addEventListener('click', function() {
-                    mobileUserDropdown.classList.toggle('hidden');
-                });
-            }
-            
-            // Logout button (desktop)
-            if (logoutBtn) {
-                logoutBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    handleLogout();
-                });
-            }
-            
-            // Logout button (mobile)
-            if (mobileLogoutBtn) {
-                mobileLogoutBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    handleLogout();
-                });
-            }
-            
-            // Mobile menu toggle
-            if (mobileMenuButton) {
-                mobileMenuButton.addEventListener('click', function() {
-                    mobileMenu.classList.toggle('hidden');
-                });
-            }
-            
-            // Close dropdowns when clicking outside
-            document.addEventListener('click', function(e) {
-                if (userMenuButton && !userMenuButton.contains(e.target) && userDropdown && !userDropdown.contains(e.target)) {
-                    userDropdown.classList.add('hidden');
-                }
-                
-                if (mobileUserMenuButton && !mobileUserMenuButton.contains(e.target) && mobileUserDropdown && !mobileUserDropdown.contains(e.target)) {
-                    mobileUserDropdown.classList.add('hidden');
-                }
-            });
-            
-            // Input validation on blur
-            document.getElementById('student-id').addEventListener('blur', validateStudentId);
-            document.getElementById('email').addEventListener('blur', validateEmail);
+        document.getElementById('student-id').addEventListener('blur', validateStudentId);
+        document.getElementById('email').addEventListener('blur', validateEmail);
+    }
+    
+    function handleLogin() {
+        const studentId = document.getElementById('student-id').value.trim();
+        const email = document.getElementById('email').value.trim();
+        if (!validateStudentId() || !validateEmail()) return;
+        const users = getUsers();
+        const existingUser = users.find(user => user.email.toLowerCase() === email.toLowerCase());
+        if (existingUser) {
+            if (existingUser.id.toUpperCase() === studentId.toUpperCase()) {
+                loginUser(existingUser);
+                showToast('Welcome, ' + existingUser.name + '!');
+            } else showError('email', 'This email has already been used.');
+        } else {
+            pendingUser = { id: studentId, email: email };
+            showNameForm();
         }
-        
-        // Handle login form submission
-        function handleLogin() {
-            const studentId = document.getElementById('student-id').value.trim();
-            const email = document.getElementById('email').value.trim();
-            
-            // Validate inputs
-            const isStudentIdValid = validateStudentId();
-            const isEmailValid = validateEmail();
-            
-            if (!isStudentIdValid || !isEmailValid) {
-                return;
-            }
-            
-            // Check if user exists
-            const users = getUsers();
-            const existingUser = users.find(user => user.email.toLowerCase() === email.toLowerCase());
-            
-            if (existingUser) {
-                // Email is already registered
-                if (existingUser.id.toUpperCase() === studentId.toUpperCase()) {
-                    // ID matches - successful login
-                    loginUser(existingUser);
-                    showToast('Welcome, ' + existingUser.name + '!');
-                } else {
-                    // ID doesn't match - show error
-                    showError('email', 'This email has already been used.');
-                }
-            } else {
-                // New registration - show name form
-                pendingUser = { id: studentId, email: email };
-                showNameForm();
-            }
-        }
-        
-        // Handle name form submission
-        function handleNameSubmit() {
-            const fullName = document.getElementById('full-name').value.trim();
-            
-            if (!fullName) {
-                // Show error if name is empty
-                document.getElementById('full-name').classList.add('border-red-500');
-                return;
-            }
-            
-            // Register the new user
-            pendingUser.name = fullName;
-            registerUser(pendingUser);
-            
-            // Login the new user
-            loginUser(pendingUser);
-            showToast('Welcome, ' + fullName + '!');
-            
-            // Reset pending user
-            pendingUser = null;
-        }
-        
-        // Validate student ID
-        function validateStudentId() {
-            const studentIdInput = document.getElementById('student-id');
-            const errorIcon = document.getElementById('student-id-error');
-            const errorMessage = document.getElementById('student-id-error-message');
-            
-            const studentId = studentIdInput.value.trim();
-            const isValid = /^(C6|c6)[a-zA-Z0-9]{6,7}$/i.test(studentId);
-            
-            if (!isValid && studentId) {
-                showError('student-id', 'Please enter a valid Student ID (starts with C6 or c6, 8–9 characters).');
-                return false;
-            } else {
-                clearError('student-id');
-                return true;
-            }
-        }
-        
-        // Validate email
-        function validateEmail() {
-            const emailInput = document.getElementById('email');
-            const errorIcon = document.getElementById('email-error');
-            const errorMessage = document.getElementById('email-error-message');
-            
-            const email = emailInput.value.trim();
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            const isValid = emailRegex.test(email);
-            
-            if (!isValid && email) {
-                showError('email', 'Please enter a valid email.');
-                return false;
-            } else {
-                clearError('email');
-                return true;
-            }
-        }
-        
-        // Show error for a field
-        function showError(fieldId, message) {
-            const errorIcon = document.getElementById(fieldId + '-error');
-            const errorMessage = document.getElementById(fieldId + '-error-message');
-            
-            errorIcon.classList.remove('hidden');
-            errorMessage.textContent = message;
-            errorMessage.classList.remove('hidden');
-            
-            document.getElementById(fieldId).classList.add('border-red-500');
-        }
-        
-        // Clear error for a field
-        function clearError(fieldId) {
-            const errorIcon = document.getElementById(fieldId + '-error');
-            const errorMessage = document.getElementById(fieldId + '-error-message');
-            
-            errorIcon.classList.add('hidden');
-            errorMessage.classList.add('hidden');
-            
-            document.getElementById(fieldId).classList.remove('border-red-500');
-        }
-        
-        // Show name input form
-        function showNameForm() {
-            nameFormContainer.classList.remove('hidden');
-            nameFormContainer.classList.add('animate-fade-in');
-        }
-        
-        // Hide name input form
-        function hideNameForm() {
-            nameFormContainer.classList.add('hidden');
-            pendingUser = null;
-        }
-        
-        // Register a new user
-        function registerUser(user) {
-            const users = getUsers();
-            users.push(user);
-            localStorage.setItem(USERS_KEY, JSON.stringify(users));
-        }
-        
-        // Login user (set current user)
-        function loginUser(user) {
-            localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
-            showDashboard(user);
-        }
-        
-        // Logout user
-        function handleLogout() {
-            localStorage.removeItem(CURRENT_USER_KEY);
-            if (userDropdown) userDropdown.classList.add('hidden');
-            if (mobileUserDropdown) mobileUserDropdown.classList.add('hidden');
-            showLoginForm();
-            showToast('You have been logged out successfully.');
-        }
-        
-        // Show dashboard
-        function showDashboard(user) {
-            // Update welcome box
-            welcomeMessage.textContent = `Welcome, ${user.name}!`;
-            userFullName.textContent = user.name;
-            userIdDisplay.textContent = user.id;
-            
-            // Show user icons in header
-            userIcon.classList.remove('hidden');
-            mobileUserIcon.classList.remove('hidden');
-            
-            // Switch to dashboard view
-            loginContainer.classList.add('hidden');
-            dashboardContainer.classList.remove('hidden');
-        }
-        
-        // Show login form
-        function showLoginForm() {
-            // Hide user icons in header
-            userIcon.classList.add('hidden');
-            mobileUserIcon.classList.add('hidden');
-            
-            // Switch to login view
-            dashboardContainer.classList.add('hidden');
-            loginContainer.classList.remove('hidden');
-            
-            // Reset forms
-            loginForm.reset();
-            nameForm.reset();
-            hideNameForm();
-            
-            // Clear any errors
-            clearError('student-id');
-            clearError('email');
-        }
-        
-        // Show toast notification
-        function showToast(message) {
-            toastMessage.textContent = message;
-            toast.classList.add('show');
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
-        
-        // Get all users from localStorage
-        function getUsers() {
-            const usersJSON = localStorage.getItem(USERS_KEY);
-            return usersJSON ? JSON.parse(usersJSON) : [];
-        }
-        
-        // Get current user from localStorage
-        function getCurrentUser() {
-            const userJSON = localStorage.getItem(CURRENT_USER_KEY);
-            return userJSON ? JSON.parse(userJSON) : null;
-        }
-    </script>
+    }
+    
+    function handleNameSubmit() {
+        const fullName = document.getElementById('full-name').value.trim();
+        if (!fullName) return document.getElementById('full-name').classList.add('border-red-500');
+        pendingUser.name = fullName;
+        registerUser(pendingUser);
+        loginUser(pendingUser);
+        showToast('Welcome, ' + fullName + '!');
+        pendingUser = null;
+    }
+    
+    function validateStudentId() {
+        const studentIdInput = document.getElementById('student-id');
+        const studentId = studentIdInput.value.trim();
+        const isValid = /^(C6|c6)[a-zA-Z0-9]{6,7}$/i.test(studentId);
+        if (!isValid && studentId) showError('student-id', 'Please enter a valid Student ID (C6xxxxxx).');
+        else clearError('student-id');
+        return isValid;
+    }
+    
+    function validateEmail() {
+        const emailInput = document.getElementById('email');
+        const email = emailInput.value.trim();
+        const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        if (!isValid && email) showError('email', 'Please enter a valid email.');
+        else clearError('email');
+        return isValid;
+    }
+    
+    function showError(fieldId, message) {
+        const errorIcon = document.getElementById(fieldId + '-error');
+        const errorMessage = document.getElementById(fieldId + '-error-message');
+        errorIcon.classList.remove('hidden');
+        errorMessage.textContent = message;
+        errorMessage.classList.remove('hidden');
+        document.getElementById(fieldId).classList.add('border-red-500');
+    }
+    
+    function clearError(fieldId) {
+        const errorIcon = document.getElementById(fieldId + '-error');
+        const errorMessage = document.getElementById(fieldId + '-error-message');
+        errorIcon.classList.add('hidden');
+        errorMessage.classList.add('hidden');
+        document.getElementById(fieldId).classList.remove('border-red-500');
+    }
+    
+    function showNameForm() { nameFormContainer.classList.remove('hidden'); nameFormContainer.classList.add('animate-fade-in'); }
+    function hideNameForm() { nameFormContainer.classList.add('hidden'); pendingUser = null; }
+    
+    function registerUser(user) { const users = getUsers(); users.push(user); localStorage.setItem(USERS_KEY, JSON.stringify(users)); }
+    function loginUser(user) { localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user)); showDashboard(user); }
+    
+    function handleLogout() { localStorage.removeItem(CURRENT_USER_KEY); if(userDropdown) userDropdown.classList.add('hidden'); if(mobileUserDropdown) mobileUserDropdown.classList.add('hidden'); showLoginForm(); showToast('You have been logged out successfully.'); }
+    
+    function showDashboard(user) { welcomeMessage.textContent = `Welcome, ${user.name}!`; userFullName.textContent = user.name; userIdDisplay.textContent = user.id; userIcon.classList.remove('hidden'); mobileUserIcon.classList.remove('hidden'); loginContainer.classList.add('hidden'); dashboardContainer.classList.remove('hidden'); }
+    
+    function showLoginForm() { userIcon.classList.add('hidden'); mobileUserIcon.classList.add('hidden'); dashboardContainer.classList.add('hidden'); loginContainer.classList.remove('hidden'); loginForm.reset(); nameForm.reset(); hideNameForm(); clearError('student-id'); clearError('email'); }
+    
+    function showToast(message) { toastMessage.textContent = message; toast.classList.add('show'); setTimeout(() => { toast.classList.remove('show'); }, 3000); }
+    
+    function getUsers() { const usersJSON = localStorage.getItem(USERS_KEY); return usersJSON ? JSON.parse(usersJSON) : []; }
+    function getCurrentUser() { const userJSON = localStorage.getItem(CURRENT_USER_KEY); return userJSON ? JSON.parse(userJSON) : null; }
+</script>
+
 </body>
 </html>
-
