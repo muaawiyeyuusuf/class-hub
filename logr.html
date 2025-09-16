@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Instruction - Class Portal</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            background-size: 200% 200%;
+            animation: gradientAnimation 15s ease infinite;
+        }
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .mobile-menu-slide {
+            transform: translateY(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        .mobile-menu-slide.show {
+            transform: translateY(0);
+        }
+        /* Advanced card hover effect */
+        .card-advanced:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header/Nav -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="#" class="flex items-center text-blue-600 font-bold text-xl">
+                <i class="fas fa-graduation-cap mr-2"></i>
+                <span>Class-Hub</span>
+            </a>
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex space-x-6 items-center">
+                <a href="#" class="text-gray-700 hover:text-blue-600 transition">Home</a>
+                <a href="#" class="text-gray-700 hover:text-blue-600 transition">Lessons</a>
+                <a href="#" class="text-gray-700 hover:text-blue-600 transition">Posts</a>
+                <a href="#" class="text-gray-700 hover:text-blue-600 transition">About</a>
+                <a href="#" class="text-gray-700 hover:text-blue-600 transition">Contact</a>
+            </nav>
+            <!-- Mobile menu button -->
+            <div class="md:hidden flex items-center">
+                <button id="mobile-menu-button" class="text-gray-600 text-xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu-slide md:hidden bg-white border-b shadow-md">
+        <div class="container mx-auto px-4 py-3 flex flex-col space-y-2">
+            <a href="#" class="py-2 text-gray-700 hover:text-blue-600 transition">Home</a>
+            <a href="#" class="py-2 text-gray-700 hover:text-blue-600 transition">Lessons</a>
+            <a href="#" class="py-2 text-gray-700 hover:text-blue-600 transition">Posts</a>
+            <a href="#" class="py-2 text-gray-700 hover:text-blue-600 transition">About</a>
+            <a href="#" class="py-2 text-gray-700 hover:text-blue-600 transition">Contact</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-grow relative flex items-center justify-center gradient-bg p-6">
+        <!-- Advanced Card Container -->
+        <div class="relative z-10 max-w-5xl w-full bg-white rounded-3xl shadow-xl p-8 flex flex-col md:flex-row gap-8 card-advanced transition-transform duration-300">
+            
+            <!-- Video Section -->
+            <div class="w-full md:w-2/3 rounded-xl overflow-hidden shadow-lg">
+                <video id="instruction-video" class="w-full h-full object-cover" controls>
+                    <source src="0916.mp4" type="video/mp4">
+                    Your browser does not support HTML5 video.
+                </video>
+            </div>
+            
+            <!-- Text Section -->
+            <div class="w-full md:w-1/3 flex flex-col justify-center gap-4 text-center md:text-left">
+                <h2 class="text-3xl font-extrabold text-gray-800 mb-2">Ardayga Qaaliga ah</h2>
+                <p class="text-gray-700 mb-2">
+                    Marka hore waa in aad login ama sign in sameysaa si aad u ilaaliso amnigaaga, hubinta ID-gaaga iyo inaad class-ka ka mid tahay. Fadlan raac tilmaamaha ku jira muqaalka hoose.
+                </p>
+                <ul class="list-disc pl-5 text-gray-600 mb-4">
+                    <li>Hubi in email-kaaga uu sax yahay</li>
+                    <li>Fadlan isticmaal ID-ga saxda ah</li>
+                    <li>Raac tilmaamaha video-ka si aad u hesho amniga dhameystiran</li>
+                </ul>
+                <button id="toggle-audio" class="bg-blue-600 text-white py-3 px-5 rounded-xl hover:bg-blue-700 transition inline-flex items-center gap-3 text-lg font-medium">
+                    <i class="fas fa-volume-up"></i>
+                    Toggle Audio
+                </button>
+                <a href="index.html" class="bg-blue-600 text-white py-3 px-5 rounded-xl hover:bg-blue-700 transition inline-flex items-center gap-3 text-lg font-medium">
+                    <i class="fas fa-home"></i>
+                    Home
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 Class-Hub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('show');
+        });
+
+        // Video audio toggle
+        const toggleAudioBtn = document.getElementById('toggle-audio');
+        const video = document.getElementById('instruction-video');
+
+        toggleAudioBtn.addEventListener('click', () => {
+            video.muted = !video.muted;
+            toggleAudioBtn.innerHTML = video.muted 
+                ? '<i class="fas fa-volume-mute"></i> Unmute Audio' 
+                : '<i class="fas fa-volume-up"></i> Mute Audio';
+        });
+    </script>
+</body>
+</html>
